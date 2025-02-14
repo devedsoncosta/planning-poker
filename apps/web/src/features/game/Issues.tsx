@@ -62,6 +62,11 @@ type CreateIssueFormValues = z.infer<typeof createIssueSchema>;
 const CreateIssueForm = () => {
   const { issues } = useDocuments();
   const inputRef = useRef<HTMLInputElement>(null);
+  const userId = getSession();
+  const stateSnap = useSnapshot(state);
+
+  const isRoomCreator = stateSnap.createdBy === userId;
+
   useHotkeys([
     [
       "c",
@@ -96,7 +101,7 @@ const CreateIssueForm = () => {
 
     form.reset({ title: "" });
   };
-
+  if (!isRoomCreator) return null;
   return (
     <Form {...form}>
       <form

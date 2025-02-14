@@ -3,6 +3,7 @@ import { useSnapshot } from "valtio";
 import { participantsState, state } from "@/store";
 import { getSession } from "@/lib/session"; // Certifique-se de importar getSession
 import type { FC } from "react";
+import { Button } from "@/components/ui/button";
 
 export const ParticipantsList: FC = () => {
     const participantsSnap = useSnapshot(participantsState);
@@ -30,7 +31,7 @@ export const ParticipantsList: FC = () => {
                         <span>👑</span>
                     ) : (
                         stateSnap.createdBy === userId && (
-                            <button>Remover</button>
+                            <Button variant={"destructive"}>Remover</Button>
                         )
                     )}
                 </div>
