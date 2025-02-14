@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    box-sizing: border-box;
+    cursor: default !important;
+
+}
+
+:root {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+@layer base {
+    :root {
+        --background: 142.1 100% 99%;
+        --foreground: 142.1 5% 10%;
+        --card: 142.1 50% 99%;
+        --card-foreground: 142.1 5% 15%;
+        --popover: 142.1 100% 99%;
+        --popover-foreground: 142.1 100% 10%;
+        --primary: 142.1 70.6% 45.3%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 142.1 30% 90%;
+        --secondary-foreground: 0 0% 0%;
+        --muted: 104.1 30% 95%;
+        --muted-foreground: 142.1 5% 40%;
+        --accent: 104.1 30% 90%;
+        --accent-foreground: 142.1 5% 15%;
+        --destructive: 0 100% 50%;
+        --destructive-foreground: 142.1 5% 99%;
+        --border: 142.1 30% 82%;
+        --input: 142.1 30% 50%;
+        --ring: 142.1 70.6% 45.3%;
+        --radius: 0.5rem;
+        --chart-1: 220 70% 50%;
+        --chart-2: 160 60% 45%;
+        --chart-3: 30 80% 55%;
+        --chart-4: 280 65% 60%;
+        --chart-5: 340 75% 55%;
+      }
+
+      .dark {
+        --background: 131 30% 6%;
+        --foreground: 131 5% 90%;
+        --card: 131 30% 6%;
+        --card-foreground: 131 5% 90%;
+        --popover: 131 30% 5%;
+        --popover-foreground: 131 5% 90%;
+        --primary: 131 69.3% 70.6%;
+        --primary-foreground: 0 0% 0%;
+        --secondary: 131 30% 10%;
+        --secondary-foreground: 0 0% 100%;
+        --muted: 93 30% 15%;
+        --muted-foreground: 131 5% 60%;
+        --accent: 93 30% 15%;
+        --accent-foreground: 131 5% 90%;
+        --destructive: 0 50% 30%;
+        --destructive-foreground: 131 5% 90%;
+        --border: 131 30% 18%;
+        --input: 131 30% 18%;
+        --ring: 131 69.3% 70.6%;
+        --radius: 0.5rem;
+      }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+html, body, #root {
+    min-height: 100dvh;
+
+}
+
+body {
+    overflow: hidden;
+    cursor: default;
+}
+
+kbd {
+    font-feature-settings: "cv08";
+    font-family: Inter;
+}
+
+
