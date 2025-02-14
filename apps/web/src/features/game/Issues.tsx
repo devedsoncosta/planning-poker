@@ -111,7 +111,7 @@ const CreateIssueForm = () => {
               <FormControl>
                 <Input
                   type="text"
-                  placeholder="Titulo da tarefa"
+                  placeholder="Adicionar tarefa"
                   data-testid="create-issue-input"
                   {...field}
                   ref={inputRef}
