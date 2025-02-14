@@ -80,7 +80,7 @@ export const CreateUserForm = ({ roomId }: { roomId: string }) => {
               </FormItem>
             )}
           />
-          <Button type="submit">Join</Button>
+          <Button type="submit">Entrar</Button>
         </div>
       </form>
     </Form>
