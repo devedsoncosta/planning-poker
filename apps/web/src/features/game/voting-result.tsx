@@ -101,7 +101,7 @@ export const VotingResult = () => {
                   {vote}
                 </div>
                 <span>
-                  {count} {count === 1 ? "vote" : "votes"}
+                  {count} {count === 1 ? "voto" : "votos"}
                 </span>
               </div>
             );

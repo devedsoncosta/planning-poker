@@ -1,3 +1,7 @@
+import { useSnapshot } from "valtio";
+import { participantsState } from "@/store.ts";
+import type { FC } from "react";
+import { useParams } from "react-router-dom";
 import { CopyToClipboard } from "@/components/copy-to-clipboard";
 import { Button } from "@/components/ui/button";
 import { ShortcutsInfo } from "@/components/ui/shortcuts-info";
@@ -12,15 +16,13 @@ import { VotingResult } from "@/features/game/voting-result.tsx";
 import { HocusPocusProvider } from "@/hooks/useHocuspocus.tsx";
 import { RealtimeProvider, useDocuments } from "@/hooks/useRealtime.tsx";
 import { getGuestName, getSession } from "@/lib/session";
-import { localState, participantsState, state } from "@/store.ts";
+import { localState, state } from "@/store.ts";
 import { ydoc } from "@/yjsDoc.ts";
 import { useDocumentTitle } from "@mantine/hooks";
 import { motion } from "framer-motion";
 import { QRCodeSVG } from "qrcode.react";
-import type { FC } from "react";
-import { useParams } from "react-router-dom";
-import { useSnapshot } from "valtio";
 import { HeaderLeft } from "../../components/header-left";
+import { ParticipantsList } from "./participant-list";
 
 const Game: FC<{ roomId: string }> = ({ roomId }) => {
   const snap = useSnapshot(state);
@@ -84,8 +86,10 @@ const Game: FC<{ roomId: string }> = ({ roomId }) => {
         </div>
       </nav>
 
-      <div className={"flex flex-1"}>
-        <div className={"min-h-full flex-1"}>
+      <div className="flex flex-1">
+        <ParticipantsList />
+
+        <div className="min-h-full flex-1">
           <div className="relative flex flex-col h-full gap-2 p-4 mx-4 mb-4 overflow-hidden rounded-lg border-border">
             <VotingResult />
 

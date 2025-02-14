@@ -80,7 +80,7 @@ export function PreferencesDropdownMenu({
                 window.location.replace("/");
               }}
             >
-              <span>Logout</span>
+              <span>Sair</span>
             </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>

@@ -219,7 +219,7 @@ const IssueList = () => {
     if (snap.createdBy !== getSession()) {
       toast({
         title:
-          "Não é possível excluir todos os itens, apenas o criador da sala pode fazer isso",
+          "Não é possível excluir todos as tarefas, apenas o criador da sala pode fazer isso",
       });
       return;
     }
@@ -288,7 +288,7 @@ const IssueList = () => {
         >
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Tem certeza de que deseja excluir todos os itens?
+              Tem certeza de que deseja excluir todos as tarefas?
             </AlertDialogTitle>
             <AlertDialogDescription>
               Você pode desfazer esta ação pressionando <Kbd>Command</Kbd> +{" "}
@@ -414,8 +414,8 @@ export const Issues = () => {
           <TooltipContent sideOffset={10}>
             <p>
               {localState.issuesOpen
-                ? "Fechar painel de itens"
-                : "Abrir painel de itens"}
+                ? "Fechar painel de tarefas"
+                : "Abrir painel de tarefas"}
             </p>
           </TooltipContent>
         </Tooltip>
@@ -431,7 +431,7 @@ export const Issues = () => {
         onInteractOutside={(event) => event.preventDefault()}
       >
         <SheetHeader className={"p-4 px-4 mx-1"}>
-          <SheetTitle>Itens</SheetTitle>
+          <SheetTitle>Tarefas</SheetTitle>
           <CreateIssueForm />
         </SheetHeader>
 

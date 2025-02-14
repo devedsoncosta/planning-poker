@@ -22,9 +22,15 @@ export const RevealCards = () => {
 
     if (index !== -1) {
       const numericVotes = snap.votes
-        .filter((vote) => typeof vote.vote === "number")
-        .map((vote) => Number(vote.vote));
-      const averageStoryPoints = Math.round(mean(numericVotes));
+          .map((vote) => {
+            if (vote.vote === "?" || vote.vote === "☕") {
+              return null;
+            }
+            return typeof vote.vote === "string" ? Number(vote.vote) : vote.vote;
+          })
+          .filter((vote) => vote !== null && !isNaN(vote));
+
+        const averageStoryPoints = Math.round(mean(numericVotes));
 
       const updatedIssue = {
         ...currentIssues[index],
