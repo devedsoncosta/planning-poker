@@ -135,13 +135,15 @@ function IssueCard(props: {
 }) {
   const { ref, focused } = useFocusWithin();
   const { currentVotingIssue } = useSnapshot(state);
+  const userId = getSession();
+  const stateSnap = useSnapshot(state);
 
   useHotkeys([
     ["Enter", focused ? props.onClick : () => {}, { preventDefault: false }],
   ]);
 
   const currentVoting = currentVotingIssue?.id === props.issue.id;
-
+  const isRoomCreator = stateSnap.createdBy === userId;
   return (
     <motion.div
       data-testid={`issue-${props.issue.title}`}
@@ -160,13 +162,15 @@ function IssueCard(props: {
     >
       <div className={"flex justify-between items-center"}>
         <p className={"text-sm"}>{props.issue.title}</p>
-        <IssueDropdownMenu
-          issue={props.issue}
-          onDelete={props.onDelete}
-          onCardClick={props.onClick}
-          cardFocused={focused}
-          index={props["data-vim-position"]}
-        />
+        {(isRoomCreator) && (
+          <IssueDropdownMenu
+            issue={props.issue}
+            onDelete={props.onDelete}
+            onCardClick={props.onClick}
+            cardFocused={focused}
+            index={props["data-vim-position"]}
+          />
+        )}
       </div>
 
       <div />
@@ -204,13 +208,6 @@ const IssueList = () => {
     const deletingIssueIndex = issuesSnap.findIndex(
       (issue) => issue.id === issueId,
     );
-
-    if (issuesSnap[deletingIssueIndex].createdBy !== getSession()) {
-      toast({
-        title: "Não é possível excluir um item que você não criou",
-      });
-      return;
-    }
 
     issues.delete(deletingIssueIndex, 1);
   };
