@@ -4,8 +4,6 @@ services:
       context: .
       dockerfile: Dockerfile.sync-server
     container_name: sync-server
-    networks:
-      - bridge
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.sync-server.rule=Host(`api-poker.edsoncosta.online`)"
@@ -22,8 +20,6 @@ services:
     container_name: planning-poker-web
     depends_on:
       - sync-server
-    networks:
-      - bridge
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.planning-poker-web.rule=Host(`poker.edsoncosta.online`)"
@@ -32,7 +28,3 @@ services:
       - "traefik.http.routers.planning-poker-web.middlewares=redirect-https"
 
     restart: unless-stopped
-
-networks:
-  bridge:
-    external: true
