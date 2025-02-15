@@ -23,7 +23,7 @@ services:
     depends_on:
       - sync-server
     networks:
-      - ecsistem
+      - bridge
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.planning-poker-web.rule=Host(`poker.edsoncosta.online`)"
@@ -34,5 +34,5 @@ services:
     restart: unless-stopped
 
 networks:
-  ecsistem:
+  bridge:
     external: true

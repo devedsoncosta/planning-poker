@@ -1,11 +1,11 @@
-FROM node:20-alpine as builder
+FROM node:20-alpine AS builder
 WORKDIR /root
 RUN npm install -g pnpm
 COPY . /root
 RUN pnpm install
 RUN pnpm --filter sync-server build
 
-FROM node:20-alpine as production-build
+from node:20-alpine AS production-build
 COPY --from=builder /root/apps/sync-server/dist .
 COPY --from=builder /root/apps/sync-server/package.json .
 # Copy the sqlite3 binary
