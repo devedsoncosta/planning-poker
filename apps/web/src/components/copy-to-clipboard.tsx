@@ -26,7 +26,7 @@ export const CopyToClipboard = ({ url }: { url: string }) => {
         });
       }}
     >
-      Compartilhar
+      Convidar
     </Button>
   );
 };

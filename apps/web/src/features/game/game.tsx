@@ -1,5 +1,5 @@
 import { useSnapshot } from "valtio";
-import { participantsState } from "@/store.ts";
+import { participantsState, VotingHistory } from "@/store.ts";
 import type { FC } from "react";
 import { useParams } from "react-router-dom";
 import { CopyToClipboard } from "@/components/copy-to-clipboard";
@@ -23,12 +23,14 @@ import { motion } from "framer-motion";
 import { QRCodeSVG } from "qrcode.react";
 import { HeaderLeft } from "../../components/header-left";
 import { ParticipantsList } from "./participant-list";
+import ExportButton from "@/components/export-button";
 
 const Game: FC<{ roomId: string }> = ({ roomId }) => {
   const snap = useSnapshot(state);
   const { participants } = useDocuments();
   const { decryptedIssues } = useSnapshot(localState);
   const participantsSnap = useSnapshot(participantsState);
+  const { votingHistory } = useSnapshot(state);
 
   const userId = getSession();
   const currentEncryptedVotingIssue = snap.currentVotingIssue;
@@ -81,6 +83,7 @@ const Game: FC<{ roomId: string }> = ({ roomId }) => {
         <HeaderLeft isAuthenticated roomId={roomId} />
 
         <div className="flex items-center gap-2">
+          <ExportButton data={votingHistory as VotingHistory[]} decryptedIssues={decryptedIssues.map(issue => ({ id: issue.id, title: issue.title }))}/>
           <CopyToClipboard url={url} />
           <Issues />
         </div>
