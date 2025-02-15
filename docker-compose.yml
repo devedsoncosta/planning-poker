@@ -1,30 +1,54 @@
+version: "3.7"
 services:
+
+## --------------------------- POKER --------------------------- ##
+  poker:
+    image: ofcedsoncosta/poker-web:latest
+    ports:
+      - "3030:3030"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - poker:/app/data
+    networks:
+      - ecsistem
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1024M
+
   sync-server:
-    build:
-      context: .
-      dockerfile: Dockerfile.sync-server
-    container_name: sync-server
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.sync-server.rule=Host(`api-poker.edsoncosta.online`)"
-      - "traefik.http.routers.sync-server.entrypoints=websecure"
-      - "traefik.http.routers.sync-server.tls=true"
-      - "traefik.http.routers.sync-server.middlewares=redirect-https"
+    image: ofcedsoncosta/poker-sync-server:latest
+    volumes:
+      - poker:/app/data
+    networks:
+      - ecsistem
+    ports:
+      - "8080:8080"
+    environment:
+      - NODE_ENV=production
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1024M
 
-    restart: unless-stopped
+## --------------------------- POKER --------------------------- ##
 
-  planning-poker-web:
-    build:
-      context: .
-      dockerfile: Dockerfile.web
-    container_name: planning-poker-web
-    depends_on:
-      - sync-server
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.planning-poker-web.rule=Host(`poker.edsoncosta.online`)"
-      - "traefik.http.routers.planning-poker-web.entrypoints=websecure"
-      - "traefik.http.routers.planning-poker-web.tls=true"
-      - "traefik.http.routers.planning-poker-web.middlewares=redirect-https"
+volumes:
+  poker:
+    external: true
+    name: poker
 
-    restart: unless-stopped
+networks:
+  ecsistem:
+    external: true
+    name: ecsistem
