@@ -1,14 +1,18 @@
 import { ButtonRotateBorder } from "@/components/ui/button-rotate-border";
 import { useDocuments } from "@/hooks/useRealtime.tsx";
-import { issuesState, state } from "@/store.ts";
+import { issuesState, state, participantsState } from "@/store.ts";
 import { useHotkeys } from "@mantine/hooks";
 import mean from "lodash.mean";
 import { useSnapshot } from "valtio";
+import { getSession } from "@/lib/session";
 
 export const RevealCards = () => {
   const snap = useSnapshot(state);
   const issuesSnap = useSnapshot(issuesState);
+  const participantsSnap = useSnapshot(participantsState);
   const { room, issues } = useDocuments();
+  const userId = getSession();
+  const isRoomCreator = snap.createdBy === userId;
 
   const onRevealCards = () => {
     if (snap.votes?.map((vote) => vote.vote).length === 0) return;
@@ -39,7 +43,7 @@ export const RevealCards = () => {
 
       if (index >= 0 && index < issues.length) {
         // TODO: update this when YJS has an update method
-        // FIXME: run this in a transaction. Valtio is not reactive to this transaction, need to fix it
+        // FIXME: run this in a transaction. Valtio é não reativo a esta transação, precisa corrigir
         issues.delete(index, 1);
         issues.insert(index, [updatedIssue]);
       }
@@ -61,9 +65,15 @@ export const RevealCards = () => {
 
   useHotkeys([["r", onRevealCards]]);
 
+  const allVoted = participantsSnap.length > 0 && participantsSnap.every(participant =>
+    snap.votes.some(vote => vote.votedBy.id === participant.id && snap.currentVotingIssue?.id)
+  );
+
   return (
-    <ButtonRotateBorder onClick={onRevealCards}>
-      Revelar carta
-    </ButtonRotateBorder>
+    (allVoted || isRoomCreator) && (
+      <ButtonRotateBorder onClick={onRevealCards}>
+        Revelar carta
+      </ButtonRotateBorder>
+    )
   );
 };

@@ -4,18 +4,21 @@ import { useDocuments } from "@/hooks/useRealtime.tsx";
 import { localState, state } from "@/store.ts";
 import { useHotkeys } from "@mantine/hooks";
 import { useSnapshot } from "valtio";
+import { getSession } from "@/lib/session";
 
 export const VoteNext = () => {
   const snap = useSnapshot(state);
   const { decryptedIssues } = useSnapshot(localState);
   const { room } = useDocuments();
+  const userId = getSession();
+  const isRoomCreator = snap.createdBy === userId;
 
   const onVoteNext = () => {
     const currentIssueId = snap.currentVotingIssue?.id;
 
     if (snap.votes.length > 0 && !snap.revealCards) {
       toast({
-        title: "Can't move to the next issue, reveal the cards first",
+        title: "Não é possível passar para a próxima tarefa, revele as cartas primeiro",
       });
       return;
     }
@@ -34,13 +37,15 @@ export const VoteNext = () => {
     }
 
     toast({
-      title: "No more issues to vote on",
+      title: "Não há mais tarefas para votar",
     });
   };
 
   useHotkeys([["n", onVoteNext]]);
 
   return (
-    <ButtonRotateBorder onClick={onVoteNext}>Próxima tarefa</ButtonRotateBorder>
+    isRoomCreator && (
+      <ButtonRotateBorder onClick={onVoteNext}>Próxima tarefa</ButtonRotateBorder>
+    )
   );
 };
