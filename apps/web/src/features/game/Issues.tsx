@@ -195,7 +195,9 @@ const IssueList = () => {
   const { decryptedIssues } = useSnapshot(localState);
   const { room, issues } = useDocuments();
   const { toast } = useToast();
-
+  const stateSnap = useSnapshot(state);
+  const userId = getSession();
+  const isRoomCreator = stateSnap.createdBy === userId;
   const setActiveIssue = (issue: Issue | undefined) => {
     room.set("currentVotingIssue", issue);
     room.set("revealCards", false);
@@ -265,12 +267,13 @@ const IssueList = () => {
                   });
                   return;
                 }
-
-                setActiveIssue(
-                  issuesSnap.find(
-                    (encryptedIssue) => encryptedIssue.id === issue.id,
-                  ),
-                );
+                if (isRoomCreator){
+                  setActiveIssue(
+                    issuesSnap.find(
+                      (encryptedIssue) => encryptedIssue.id === issue.id,
+                    ),
+                  );
+                }
               }}
             />
           ))}
