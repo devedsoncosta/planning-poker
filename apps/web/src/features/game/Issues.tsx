@@ -89,18 +89,35 @@ const CreateIssueForm = () => {
 
     if (!userId || !symmetricKey || !title.length) return;
 
-    issues.push([
-      {
-        id: Date.now().toString(),
-        storyPoints: 0,
-        createdAt: Date.now(),
-        createdBy: userId,
-        title: symmetricEncrypt(title, symmetricKey),
-      },
-    ]);
+    const titles = title.split("\n").filter((t) => t.trim().length > 0);
+
+    titles.forEach((title) => {
+      issues.push([
+        {
+          id: Date.now().toString(),
+          storyPoints: 0,
+          createdAt: Date.now(),
+          createdBy: userId,
+          title: symmetricEncrypt(title, symmetricKey),
+        },
+      ]);
+    });
 
     form.reset({ title: "" });
   };
+
+  const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+    const paste = event.clipboardData.getData("text");
+    const titles = paste.split("\n").filter((t) => t.trim().length > 0);
+
+    if (titles.length > 1) {
+      event.preventDefault();
+      titles.forEach((title) => {
+        onCreateIssue({ title });
+      });
+    }
+  };
+
   if (!isRoomCreator) return null;
   return (
     <Form {...form}>
@@ -120,6 +137,7 @@ const CreateIssueForm = () => {
                   data-testid="create-issue-input"
                   {...field}
                   ref={inputRef}
+                  onPaste={handlePaste}
                 />
               </FormControl>
               <FormMessage />
@@ -250,7 +268,6 @@ const IssueList = () => {
       <AnimatePresence initial={false}>
         {decryptedIssues
           .slice()
-          .reverse()
           .map((issue, index) => (
             <IssueCard
               key={issue.id}
