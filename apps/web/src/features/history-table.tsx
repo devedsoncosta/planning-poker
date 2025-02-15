@@ -43,7 +43,7 @@ const DataTable = () => {
     );
     return {
       ...row,
-      issueTitle: issue?.title,
+      issueTitle: issue?.title || "Título não disponível",
     };
   });
 
