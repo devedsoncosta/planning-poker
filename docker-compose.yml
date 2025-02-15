@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile.sync-server
     container_name: sync-server
     networks:
-      - ecsistem
+      - bridge
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.sync-server.rule=Host(`api-poker.edsoncosta.online`)"
