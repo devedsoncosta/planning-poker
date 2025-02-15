@@ -18,6 +18,7 @@ import { ydoc } from "@/yjsDoc.ts";
 import type { FC } from "react";
 import { useParams } from "react-router-dom";
 import { useSnapshot } from "valtio";
+import { useNavigate } from "react-router-dom";
 
 /* prepare data to be exported, join the votes into a string */
 const prepareData = (data: VotingHistory[]) => {
@@ -107,6 +108,7 @@ const DataTable = () => {
 };
 
 const HistoryTable: FC<{ roomId: string }> = ({ roomId }) => {
+  const navigate = useNavigate();
   if (!ydoc.getMap(`game-state-${roomId}`)) {
     // needs sync
     return <div />;
@@ -116,6 +118,7 @@ const HistoryTable: FC<{ roomId: string }> = ({ roomId }) => {
     <div className="flex flex-col min-h-[100dvh]">
       <nav className="flex items-center justify-between gap-4 px-4 py-2 border-b bg-background border-border h-[56px]">
         <HeaderLeft roomId={roomId} isAuthenticated />
+        <Button onClick={() => navigate(`/${roomId}`)}>Voltar para Sala de Jogo</Button>
       </nav>
       <div
         className={

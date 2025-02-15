@@ -26,7 +26,7 @@ export const NetworkStatus = () => {
           />
         </TooltipTrigger>
         <TooltipContent sideOffset={20}>
-          <p>You are {online ? "online" : "offline"}</p>
+          <p>Você está {online ? "online" : "offline"}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
