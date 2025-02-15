@@ -1,0 +1,38 @@
+services:
+  sync-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.sync-server
+    container_name: sync-server
+    networks:
+      - ecsistem
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sync-server.rule=Host(`api-poker.edsoncosta.online`)"
+      - "traefik.http.routers.sync-server.entrypoints=websecure"
+      - "traefik.http.routers.sync-server.tls=true"
+      - "traefik.http.routers.sync-server.middlewares=redirect-https"
+
+    restart: unless-stopped
+
+  planning-poker-web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    container_name: planning-poker-web
+    depends_on:
+      - sync-server
+    networks:
+      - ecsistem
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.planning-poker-web.rule=Host(`poker.edsoncosta.online`)"
+      - "traefik.http.routers.planning-poker-web.entrypoints=websecure"
+      - "traefik.http.routers.planning-poker-web.tls=true"
+      - "traefik.http.routers.planning-poker-web.middlewares=redirect-https"
+
+    restart: unless-stopped
+
+networks:
+  ecsistem:
+    external: true

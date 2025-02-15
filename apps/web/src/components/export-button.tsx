@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import useExportToCsv from "@/hooks/useExportToCSV";
-import { type VotingHistory } from "@/store";
+import type { VotingHistory } from "@/store";
 
 interface ExportButtonProps {
   data: VotingHistory[];
