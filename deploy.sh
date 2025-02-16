@@ -1,3 +1,3 @@
 #!/bin/bash
 git pull origin main
-docker-compose up -d --build
+docker stack deploy -c docker-compose.yml poker-stack

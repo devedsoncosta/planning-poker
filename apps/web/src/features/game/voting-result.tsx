@@ -108,7 +108,7 @@ export const VotingResult = () => {
           })}
 
           <div className="flex flex-col items-center gap-2">
-            <p>Média arredondada:</p>
+            <p>Média:</p>
             <span>{averageStoryPoints}</span>
           </div>
         </div>
