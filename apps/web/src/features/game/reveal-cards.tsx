@@ -34,7 +34,7 @@ export const RevealCards = () => {
           })
           .filter((vote) => vote !== null && !isNaN(vote));
 
-        const averageStoryPoints = Math.round(mean(numericVotes));
+        const averageStoryPoints = mean(numericVotes);
 
       const updatedIssue = {
         ...currentIssues[index],

@@ -35,7 +35,7 @@ export const server = new Hocuspocus({
     if (data.requestHeaders.origin !== env.CLIENT_ORIGIN) {
       await sendMessage(
         `
-## Client unauthorized 
+## Client unauthorized
 \`\`\`json
 
 ${JSON.stringify(
@@ -64,7 +64,7 @@ ${JSON.stringify(
   async afterLoadDocument(data) {
     await sendMessage(
       `
-## New document loaded 
+## New document loaded
 \`\`\`json
 
 ${JSON.stringify(

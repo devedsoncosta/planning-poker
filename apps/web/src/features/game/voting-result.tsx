@@ -18,7 +18,7 @@ export const VotingResult = () => {
     })
     .filter((vote) => vote !== null && !isNaN(vote));
 
-  const averageStoryPoints = Math.round(mean(numericVotes));
+  const averageStoryPoints = mean(numericVotes);
 
   const groupedVotes: Record<number | string, number> = snap.votes.reduce<
     Record<number | string, number>
